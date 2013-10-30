@@ -126,6 +126,7 @@ PASS_RE = re.compile(r"^.{6,20}$")
 
 
 class Handler(Security, webapp2.RequestHandler):
+    
     def w(cls,*a, **kw):
         Handler.response.out.write(*a, **kw)
     def write(self, *a, **kw):
@@ -138,6 +139,17 @@ class Handler(Security, webapp2.RequestHandler):
     # standard render function
     def render(self, template, **kw):
         self.write(self.render_str(template, **kw))
+
+    def handle_exception(self, exception, debug):
+        # Set a custom message.
+        self.render('404.html')
+
+        # If the exception is a HTTPException, use its error code.
+        # Otherwise use a generic 500 error code.
+        if isinstance(exception, webapp2.HTTPException):
+            self.response.set_status(exception.code)
+        else:
+            self.response.set_status(500)
     
 
     # Name - validate_name
