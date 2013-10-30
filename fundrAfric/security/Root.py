@@ -123,6 +123,8 @@ class Security():
 USER_RE = re.compile(r"^[a-zA-Z0-9_-]{0,20}$")
 EMAIL_RE  = re.compile(r'^[\S]+@[\S]+\.[\S]+$')
 PASS_RE = re.compile(r"^.{6,20}$")
+
+
 class Handler(Security, webapp2.RequestHandler):
     def w(cls,*a, **kw):
         Handler.response.out.write(*a, **kw)
